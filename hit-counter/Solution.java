@@ -87,23 +87,6 @@ class DequeHitCounter implements HitCounter {
     }
 }
 
-/**
- * Since we have fixed window, we can define 
- * a fixed buffer and solve this in constant memory
- */
-class CircularBufferHitCounter implements HitCounter {
-    private int[] buffer;
-
-    public CircularBufferHitCounter() {
-        this.buffer = new int[300];
-    }
-
-    public void hit(int timestamp) {}
-    
-    public int getHits(int timestamp) {return 0;}
-}
-
-
 public class Solution {
     public static void main(String[] args) {
         HitCounter hitCounter = new DequeHitCounter();
