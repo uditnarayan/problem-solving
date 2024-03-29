@@ -11,14 +11,32 @@ class DataAPI {
 
 class BinarySearch {
 
+    public String search(Data[] arr) {
+        int low = 0;
+        int high = arr.length - 1;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            int value = arr[mid].getValue();
+            if (value == 0) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return arr[left].getName();
+    }
+}
+
+class ParallelBinarySearch {
+
     // parallelization factor
     private int k;
 
-    public BinarySearch(int k) {
+    public ParallelBinarySearch(int k) {
         this.k = k;
     }
 
-    public String parallelSearch(Data[] arr) {
+    public String search(Data[] arr) {
 
         int low = 0;
         int high = arr.length;
@@ -27,7 +45,7 @@ class BinarySearch {
             int[] indices = pickKIndexes(low, high);
             int[] values = DataAPI.getParallelValues(arr, indices);
             int firstZeroIndex = getFirstZeroIndex(values);
-            int lastOneIndex = getLastOneIndex(values);
+            int lastOneIndex = firstZeroIndex == -1 ? indices.length - 1 : firstZeroIndex - 1;
 
             if (lastOneIndex == -1) {
                 right = indices[0];
